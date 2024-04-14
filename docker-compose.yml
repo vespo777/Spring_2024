@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  producing:
+    image: producing-complete:latest
+    ports:
+      - "8080:8080"  # Assuming service A runs on port 8080
+    networks:
+      - spring_network
+
+  consuming:
+    build:
+      context: /Users/tileukhan/Desktop/Spring_2024/initial
+      dockerfile: Dockerfile
+#    restart: on-failure
+    ports:
+      - "8081:8081"  # Assuming service B runs on port 8081
+    networks:
+      - spring_network
+    depends_on:
+      - producing
+
+
+networks:
+  spring_network:
+    driver: bridge
